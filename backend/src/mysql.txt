@@ -1,0 +1,4 @@
+setting up mysql server locally:
+
+brew services start mysql
+mysql -u root
