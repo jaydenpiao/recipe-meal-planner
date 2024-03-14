@@ -1,11 +1,10 @@
-import mysql from 'mysql';
+import mysql from 'mysql2';
 
 // setup this later
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'your_mysql_user',
-    password: 'your_mysql_password',
-    database: 'your_database_name'
+    user: 'root',
+    //database: 'your_database_name'
 });
 
 connection.connect((err) => {
