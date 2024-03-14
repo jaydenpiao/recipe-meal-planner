@@ -1,3 +1,3 @@
-CPSC 304 project
+CPSC 304 Project
 
 Built with JS and Oracle. 
