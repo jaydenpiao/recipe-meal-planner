@@ -1,3 +1,0 @@
-dependencies for root:
-
-npm i concurrently
