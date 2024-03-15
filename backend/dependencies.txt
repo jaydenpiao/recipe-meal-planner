@@ -1,4 +1,0 @@
-backend dependencies:
-
-npm install express typescript @types/node @types/express
-npm install mysql2
