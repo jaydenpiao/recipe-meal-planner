@@ -1,6 +1,7 @@
-**backend dependencies:**
-
-npm install express typescript @types/node @types/express mysql2
+**set up**
+cd backend 
+npm i
+npm start
 
 **setting up mysql server locally:**
 
