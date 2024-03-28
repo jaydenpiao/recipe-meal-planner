@@ -13,7 +13,9 @@ const recipeService = {
 
   getAllRecipes: async (): Promise<Recipe[]> => {
     try {
-      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM recipes'); // Use connection.promise().query() to execute the query
+      const [rows]: [RowDataPacket[], FieldPacket[]] = 
+      await connection.promise().query('SELECT * FROM recipes'); 
+      // Use connection.promise().query() to execute the query
       if (!rows) return [];
       return rows.map(row => ({
         recipeid: row.recipeid,
