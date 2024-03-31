@@ -105,8 +105,13 @@ CREATE TABLE MealPlan (
 CREATE TABLE ShoppingList (
     shoppingListID INTEGER,
     mealPlanID INTEGER,
+    recipeID INTEGER,
+    ingredientName VARCHAR(50),
     PRIMARY KEY (shoppingListID),
-    FOREIGN KEY (mealPlanID) REFERENCES MealPlan(mealPlanID)
+    FOREIGN KEY (mealPlanID, recipeID) REFERENCES mealPlanContains(mealPlanID, recipeID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (ingredientName) REFERENCES Ingredient(name)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
