@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 
@@ -15,15 +16,32 @@ export function ButtonWithIcon({ onClick, buttonText }) {
 }
 
 const NavBar = () => {
-  const [selectedUser, setSelectedUser] = useState("");
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = () => setIsDropdownVisible(!isDropdownVisible);
 
   const handleSelectUser = (user) => {
-    setSelectedUser(user);
+    setSelectedUser(user.username);
     setIsDropdownVisible(false);
+    // console.log(user);
+    console.log("Selected username: ", user.username);
+    console.log("Selected userID: ", user.userID);
   };
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/users");
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error in NavBar: ", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <nav className="flex items-center justify-evenly w-full text-2xl p-4 top-0 fixed bg-gray-300">
@@ -36,22 +54,18 @@ const NavBar = () => {
           buttonText={selectedUser || "Choose User"}
         />
         {isDropdownVisible && (
-          <div className="absolute z-10 mt-2 rounded-lg bg-gray-300 w-full text-right pr-2 text-lg">
-            <div>
-              <a href="#" onClick={() => handleSelectUser("User 1")}>
-                User 1
-              </a>
-            </div>
-            <div>
-              <a href="#" onClick={() => handleSelectUser("User 2")}>
-                User 2
-              </a>
-            </div>
-            <div>
-              <a href="#" onClick={() => handleSelectUser("User 3")}>
-                User 3
-              </a>
-            </div>
+          <div className="absolute z-10 mt-2 rounded-lg bg-gray-300 w-full text-center text-lg">
+            {users.map((user) => (
+              // href={`/user/${user.userID}`}
+              <div key={user.userID}>
+                <a
+                  onClick={() => handleSelectUser(user)}
+                  className="hover:bg-gray-400 block cursor-pointer"
+                >
+                  {user.username}
+                </a>
+              </div>
+            ))}
           </div>
         )}
       </div>
