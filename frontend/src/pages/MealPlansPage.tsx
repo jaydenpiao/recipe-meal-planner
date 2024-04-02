@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import ShoppingListOverlay from "@/components/ShoppingListOverlay";
 import MealPlanCard from "@/components/MealPlanCard";
+import { useNavigate } from "react-router-dom";
 
 const MealPlansPage = () => {
+  const navigate = useNavigate();
+
   const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
   const [isShoppingListOverlayOpen, setShoppingListOverlayOpen] =
     useState(false);
@@ -29,6 +32,7 @@ const MealPlansPage = () => {
   const handleRecipesClick = (mealplan) => {
     setCurrentMealPlan(mealplan);
     // navigate to a new page with the recipes and url mealplans/{mealplan.name}
+    navigate(`/mealplans/${mealplan.name.replace(/\s+/g, "_")}`);
   };
 
   const handleShoppingListClick = (mealplan) => {
