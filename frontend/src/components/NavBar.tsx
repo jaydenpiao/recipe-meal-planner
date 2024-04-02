@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 
 export function ButtonWithIcon({ onClick, buttonText }) {
   return (
-    <Button onClick={onClick}>
+    <Button onClick={onClick} variant="ghost" className="text-2xl font-normal">
       {buttonText}
-      <ChevronDownIcon className="ml-2 h-4 w-4" />
+      <ChevronDownIcon className="ml-1 h-4 w-4" />
     </Button>
   );
 }
@@ -36,7 +36,7 @@ const NavBar = () => {
           buttonText={selectedUser || "Choose User"}
         />
         {isDropdownVisible && (
-          <div className="absolute z-10 mt-2 rounded-lg">
+          <div className="absolute z-10 mt-2 rounded-lg bg-gray-300 w-full text-right pr-2 text-lg">
             <div>
               <a href="#" onClick={() => handleSelectUser("User 1")}>
                 User 1
