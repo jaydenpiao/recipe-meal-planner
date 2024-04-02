@@ -3,7 +3,7 @@
     "concurrently": "^8.2.2"
   },
   "scripts": {
-    "start": "concurrently \"cd backend && npm start\" "
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm run dev \""
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
