@@ -15,7 +15,7 @@ const recipeService = {
       await connection.promise().query('SELECT * FROM recipe'); 
       if (!rows) return [];
       return rows.map(row => ({
-        recipeID: row.recipeid,
+        recipeID: row.recipeID,
         name: row.name,
         instructions: row.instructions,
       }));
@@ -24,15 +24,15 @@ const recipeService = {
     }
   },
 
-  getRecipeById: async (recipeId: number): Promise<Recipe | null> => {
+  getRecipeById: async (recipeID: number): Promise<Recipe | null> => {
     try {
-      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM recipe WHERE recipeid = ?', [recipeId]);
+      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM recipe WHERE recipeID = ?', [recipeID]);
       if (!rows || rows.length === 0) {
         return null; 
       }
       const row = rows[0];
       return {
-        recipeID: row.recipeid,
+        recipeID: row.recipeID,
         name: row.name,
         instructions: row.instructions,
       };
@@ -41,24 +41,24 @@ const recipeService = {
     }
   },
 
-  getRecipeByName: async (recipeName: string): Promise<Recipe | null> => {
+  getRecipeByName: async (recipeName: string): Promise<Recipe[]> => {
     try {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM recipe WHERE name LIKE ?', [`%${recipeName}%`]);
-
+  
       if (!rows || rows.length === 0) {
-        return null; // Recipe not found
+        return []; 
       }
-      const row = rows[0];
-      const recipe: Recipe = {
-        recipeID: row.recipeid,
+  
+      return rows.map(row => ({
+        recipeID: row.recipeID,
         name: row.name,
         instructions: row.instructions,
-      };
-      return recipe;
+      }));
     } catch (error) {
-      throw new Error(`Error fetching recipe: ${error}`);
+      throw new Error(`Error fetching recipes: ${error}`);
     }
   }
+  
 
 
 };
