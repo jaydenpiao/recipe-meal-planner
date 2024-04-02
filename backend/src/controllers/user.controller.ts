@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import recipeService from '../services/user.service';
 import userService from '../services/user.service';
 
 const controller = {

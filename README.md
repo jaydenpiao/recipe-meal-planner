@@ -5,11 +5,9 @@
 **MYSQL download instructions (homebrew):** https://formulae.brew.sh/formula/mysql
 
 **Setting up mysql server locally (CLI):**
-1) brew services start mysql
-2) mysql -u root
-3) create database 304_project;
-4) use 304_project;
-5) SOURCE mealprep.sql;
+
+1) brew services start mysql && mysql -u root 
+2) create database 304_project; use 304_project; SOURCE mealprep.sql;
 
 **To start app:**
 1) cd to root

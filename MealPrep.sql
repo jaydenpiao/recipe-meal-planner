@@ -44,8 +44,10 @@ CREATE TABLE MealPlan (
     date DATE,
     userID INTEGER,
     PRIMARY KEY (mealPlanID),
+    UNIQUE (name, userID),
     FOREIGN KEY (userID) REFERENCES User(userID)
 );
+
 
 
 CREATE TABLE Category (
@@ -296,6 +298,7 @@ INSERT INTO listContains (shoppingListID, ingredientName) VALUES
 
 INSERT INTO Rating (ratingID, score, userID, recipeID) VALUES
 (1, 1, 1, 1),
+(6 ,3, 2, 1),
 (2, 2, 2, 2),
 (3, 3, 3, 3),
 (4, 4, 4, 4),
