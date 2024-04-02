@@ -3,7 +3,8 @@
 ## How to use:
 
 **Setting up mysql server locally:**
-**https://formulae.brew.sh/formula/mysql
+
+**MYSQL download instructions (mac only):** https://formulae.brew.sh/formula/mysql
 
 1) brew services start mysql
 2) mysql -u root
