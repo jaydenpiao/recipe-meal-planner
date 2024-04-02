@@ -26,7 +26,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-evenly w-full text-2xl p-4">
+    <nav className="flex items-center justify-evenly w-full text-2xl p-4 top-0 fixed bg-gray-300">
       <Link to="/">Home</Link>
       <Link to="/recipes">Recipes</Link>
       <Link to="/mealplans">Meal Plans</Link>
