@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 export function ButtonWithIcon({ onClick, buttonText }) {
   return (
     <Button onClick={onClick}>
-      <ChevronDownIcon className="mr-2 h-4 w-4" /> {buttonText}
+      {buttonText}
+      <ChevronDownIcon className="ml-2 h-4 w-4" />
     </Button>
   );
 }
@@ -25,7 +26,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-evenly w-full text-2xl">
+    <nav className="flex items-center justify-evenly w-full text-2xl p-4 top-0 fixed bg-gray-300">
       <Link to="/">Home</Link>
       <Link to="/recipes">Recipes</Link>
       <Link to="/mealplans">Meal Plans</Link>
