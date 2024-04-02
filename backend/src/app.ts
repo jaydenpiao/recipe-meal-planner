@@ -1,14 +1,12 @@
 import express from 'express';
-import connection from './db'
-
+import connection from './db';
+import recipeRoutes from './routes/recipe.route';
+import userRouter from './routes/user.route';
 const app = express();
 
-import { Request, Response } from 'express';
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('TEST MESSAGE');
-});
-
+app.use(express.json());
+app.use('/api/recipes', recipeRoutes);
+app.use('/api/users', userRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
