@@ -113,6 +113,22 @@ editMealPlanName: async (mealPlanID: number, newName: string): Promise<void> => 
       } catch (error) {
           throw new Error(`Error deleting recipe from meal plan: ${error}`);
       }
+  },
+
+  getRecipe: async (mealplanID: number): Promise<MealPlan[]> => {
+    try {
+      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM mealplancontains WHERE mealPlanID = ?', [mealplanID]);
+
+      if (!rows || rows.length === 0) {
+        return [];
+      }
+      return rows.map(row => ({
+        mealPlanID: row.mealPlanID,
+        recipeID: row.recipeID,
+      }));
+    } catch (error) {
+      throw new Error(`Error fetching mealplans: ${error}`);
+    }
   }
 
 
