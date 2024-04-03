@@ -103,7 +103,18 @@ const controller = {
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
-  }
+  },
+  searchRecipes: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { name, minRating, sugarFree, lowCalorie, vegetarian } = req.body;
+  
+      const recipes = await recipeService.searchRecipes(name, minRating, sugarFree, lowCalorie, vegetarian);
+      res.json(recipes);
+
+    } catch (error:any) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   
 };
 

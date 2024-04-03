@@ -22,8 +22,8 @@ const recipeService = {
 
   getAllRecipes: async (): Promise<Recipe[]> => {
     try {
-      const [rows]: [RowDataPacket[], FieldPacket[]] = 
-      await connection.promise().query('SELECT * FROM recipe'); 
+      const [rows]: [RowDataPacket[], FieldPacket[]] =
+        await connection.promise().query('SELECT * FROM recipe');
       if (!rows) return [];
       return rows.map(row => ({
         recipeID: row.recipeID,
@@ -39,7 +39,7 @@ const recipeService = {
     try {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM recipe WHERE recipeID = ?', [recipeID]);
       if (!rows || rows.length === 0) {
-        return null; 
+        return null;
       }
       const row = rows[0];
       return {
@@ -55,11 +55,11 @@ const recipeService = {
   getRecipeByName: async (recipeName: string): Promise<Recipe[]> => {
     try {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query('SELECT * FROM recipe WHERE name LIKE ?', [`%${recipeName}%`]);
-  
+
       if (!rows || rows.length === 0) {
-        return []; 
+        return [];
       }
-  
+
       return rows.map(row => ({
         recipeID: row.recipeID,
         name: row.name,
@@ -100,7 +100,7 @@ const recipeService = {
         'WHERE r.recipeID = ? ' +
         'GROUP BY r.recipeID, r.name, ra.score;',
         [recipeID]
-        );
+      );
       if (!rows) return [];
       return rows.map(row => ({
         recipeID: row.recipeID,
@@ -117,8 +117,8 @@ const recipeService = {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
         'SELECT * ' +
         'FROM Review ' +
-        'WHERE recipeID = ? ',[recipeID]
-        );
+        'WHERE recipeID = ? ', [recipeID]
+      );
       if (!rows) return [];
       return rows.map(row => ({
         recipeID: row.recipeID,
@@ -135,8 +135,8 @@ const recipeService = {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
         'SELECT * ' +
         'FROM nutritionInfoRecipe ' +
-        'WHERE recipeID = ? ',[recipeID]
-        );
+        'WHERE recipeID = ? ', [recipeID]
+      );
       if (!rows) return [];
       return rows.map(row => ({
         recipeID: row.recipeID,
@@ -150,6 +150,57 @@ const recipeService = {
       throw new Error(`Error fetching nutrition: ${error}`);
     }
   },
+  searchRecipes: async (recipeName: string, minRating: number, sugarFree: boolean, lowCalorie: boolean, vegetarian: boolean): Promise<Recipe[]> => {
+    try {
+      let query = `SELECT r.*, AVG(ra.score) AS avgRating FROM recipe r`;
+      const params = [];
+
+      if (sugarFree) {
+        query += ` JOIN SugarFreeRecipe sf ON r.recipeID = sf.recipeID`;
+      }
+
+      if (lowCalorie) {
+        query += ` JOIN LowCalorieRecipe lc ON r.recipeID = lc.recipeID`;
+      }
+
+      if (vegetarian) {
+        query += ` JOIN VegetarianRecipe v ON r.recipeID = v.recipeID`;
+      }
+
+      query += ` LEFT JOIN Rating ra ON r.recipeID = ra.recipeID`;
+
+      query += ` WHERE 1`;
+
+      if (recipeName) {
+        query += ` AND r.name LIKE ?`;
+        params.push(`%${recipeName}%`);
+      }
+
+      query += ` GROUP BY r.recipeID`;
+
+      if (minRating) {
+        query += ` HAVING AVG(ra.score) >= ?`;
+        params.push(minRating);
+      }
+
+      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(query, params);
+
+      if (!rows || rows.length === 0) {
+        return [];
+      }
+
+      return rows.map(row => ({
+        recipeID: row.recipeID,
+        name: row.name,
+        instructions: row.instructions,
+        avgRating: row.avgRating
+      }));
+    } catch (error) {
+      throw new Error(`Error fetching recipes: ${error}`);
+    }
+  },
+
+
 
 
 };

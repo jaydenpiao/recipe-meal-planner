@@ -10,6 +10,7 @@ recipeRouter.get('/avgrating', recipeController.getAvgRating);
 recipeRouter.get('/ratingsid/:id', recipeController.getRecipeRatings);
 recipeRouter.get('/reviews/:id', recipeController.getRecipeReviews);
 recipeRouter.get('/nutrition/:id', recipeController.getRecipeNutrition);
+recipeRouter.post('/search', recipeController.searchRecipes);
 
 
 export default recipeRouter;

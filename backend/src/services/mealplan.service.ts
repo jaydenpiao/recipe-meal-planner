@@ -129,7 +129,9 @@ editMealPlanName: async (mealPlanID: number, newName: string): Promise<void> => 
     } catch (error) {
       throw new Error(`Error fetching mealplans: ${error}`);
     }
-  }
+  },
+
+ 
 
 
 
