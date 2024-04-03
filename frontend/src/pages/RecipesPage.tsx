@@ -4,11 +4,13 @@ import RecipeOverlay from "@/components/RecipeOverlay";
 import NutritionOverlay from "@/components/NutritionOverlay";
 import axios from "axios";
 import RatingsOverlay from "@/components/RatingsOverlay";
+import ReviewsOverlay from "@/components/ReviewsOverlay";
 
 const RecipesPage = () => {
   const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
   const [isNutritionOverlayOpen, setNutritionOverlayOpen] = useState(false);
   const [isRatingsOverlayOpen, setRatingsOverlayOpen] = useState(false);
+  const [isReviewsOverlayOpen, setReviewsOverlayOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [recipes, setRecipes] = useState([]);
 
@@ -42,6 +44,11 @@ const RecipesPage = () => {
     setRatingsOverlayOpen(true);
   };
 
+  const handleReviewsClick = (recipe) => {
+    setCurrentRecipe(recipe);
+    setReviewsOverlayOpen(true);
+  };
+
   return (
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
@@ -51,6 +58,7 @@ const RecipesPage = () => {
             key={recipe.recipeID}
             recipe={recipe}
             onRatingsClick={() => handleRatingsClick(recipe)}
+            onReviewsClick={() => handleReviewsClick(recipe)}
             onRecipeClick={() => handleRecipeClick(recipe)}
             onNutritionClick={() => handleNutritionClick(recipe)}
           />
@@ -58,6 +66,11 @@ const RecipesPage = () => {
         <RatingsOverlay
           isOpen={isRatingsOverlayOpen}
           onClose={() => setRatingsOverlayOpen(false)}
+          recipeID={currentRecipe?.recipeID}
+        />
+        <ReviewsOverlay
+          isOpen={isReviewsOverlayOpen}
+          onClose={() => setReviewsOverlayOpen(false)}
           recipeID={currentRecipe?.recipeID}
         />
         <RecipeOverlay
