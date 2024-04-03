@@ -52,7 +52,7 @@ const RecipeCard = ({
     }
   };
 
-  const formattedRating = Number(recipe.avgrating).toFixed(1);
+  const formattedRating = Number(recipe.avgRating).toFixed(1);
 
   return (
     <div className="border p-4 m-2 grid grid-cols-6">

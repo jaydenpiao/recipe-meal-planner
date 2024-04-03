@@ -84,7 +84,7 @@ const recipeService = {
       return rows.map(row => ({
         recipeID: row.recipeID,
         name: row.name,
-        avgrating: row.average_rating,
+        avgRating: row.average_rating,
         instructions: row.instructions
       }));
     } catch (error) {
