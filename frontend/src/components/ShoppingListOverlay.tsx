@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-const ShoppingListOverlay = ({ shoppingList, isOpen, onClose }) => {
+const ShoppingListOverlay = ({ mealPlanID, isOpen, onClose }) => {
   if (!isOpen) {
     return null;
   }

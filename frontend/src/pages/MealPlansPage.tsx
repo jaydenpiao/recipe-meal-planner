@@ -1,38 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ShoppingListOverlay from "@/components/ShoppingListOverlay";
 import MealPlanCard from "@/components/MealPlanCard";
-import { useNavigate } from "react-router-dom";
+import { useUser } from "@/context/UserContext";
+import axios from "axios";
 
 const MealPlansPage = () => {
-  const navigate = useNavigate();
-
-  const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
+  const { selectedUserID } = useUser();
+  const [isRecipesOverlayOpen, setRecipesOverlayOpen] = useState(false);
   const [isShoppingListOverlayOpen, setShoppingListOverlayOpen] =
     useState(false);
   const [currentMealPlan, setCurrentMealPlan] = useState(null);
+  const [mealplans, setMealPlans] = useState([]);
 
-  const mealplans = [
-    {
-      name: "Meal Plan 1",
-      recipes: ["Spaghetti", "Pizza"],
-      shoppingList: ["cheese", "sauce", "pasta", "dough"],
-    },
-    {
-      name: "Meal Plan 2",
-      recipes: ["Fries", "Ramen"],
-      shoppingList: ["potatoes", "noodles", "broth"],
-    },
-    {
-      name: "Meal Plan 3",
-      recipes: ["Fried Rice", "Poutine"],
-      shoppingList: ["rice", "potatoes", "gravy", "cheese"],
-    },
-  ];
+  const getMealPlans = async (mealplan) => {
+    if (!selectedUserID) return;
+    try {
+      console.log("Fetching mealplan for userID: ", selectedUserID);
+      const response = await axios.get(
+        `http://localhost:3000/api/mealplan/id/${selectedUserID}`
+      );
+      setMealPlans(response.data);
+    } catch (error) {
+      console.error("Error in MealPlansPage: ", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getMealPlans();
+  }, [selectedUserID]);
 
   const handleRecipesClick = (mealplan) => {
     setCurrentMealPlan(mealplan);
-    // navigate to a new page with the recipes and url mealplans/{mealplan.name}
-    navigate(`/mealplans/${mealplan.name.replace(/\s+/g, "_")}`);
+    setRecipesOverlayOpen(true);
   };
 
   const handleShoppingListClick = (mealplan) => {
@@ -44,19 +43,24 @@ const MealPlansPage = () => {
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Meal Plans Page</h1>
       <div className="w-full">
-        {mealplans.map((mealplan, index) => (
+        {mealplans.map((mealplan) => (
           <MealPlanCard
-            key={index}
+            key={mealplan.mealPlanID}
             mealplan={mealplan}
             onRecipesClick={() => handleRecipesClick(mealplan)}
             onShoppingListClick={() => handleShoppingListClick(mealplan)}
           />
         ))}
+        {/* <RecipesOverlay
+          mealPlanID={currentMealPlan?.mealPlanID}
+          isOpen={isRecipesOverlayOpen}
+          onClose={() => setRecipesOverlayOpen(false)}
+        />
         <ShoppingListOverlay
+          mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isShoppingListOverlayOpen}
           onClose={() => setShoppingListOverlayOpen(false)}
-          shoppingList={currentMealPlan?.shoppingList}
-        />
+        /> */}
       </div>
     </div>
   );
