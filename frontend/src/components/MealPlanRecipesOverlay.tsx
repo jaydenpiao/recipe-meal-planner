@@ -1,26 +1,39 @@
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import MealPlanRecipesCard from "./MealPlanRecipesCard";
 
 const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
-  const [IDPairs, setIDPairs] = useState([]);
+  //   const [IDPairs, setIDPairs] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const getIDPairs = async () => {
+    const fetchRecipes = async () => {
       try {
         console.log("Fetching recipes for mealPlanID: ", mealPlanID);
-        const response = await axios.get(
+        const idPairsResponse = await axios.get(
           `http://localhost:3000/api/mealplan/mealplanid/${mealPlanID}`
         );
-        setIDPairs(response.data);
+        const recipeIDs = idPairsResponse.data.map((pair) => pair.recipeID);
+
+        const recipeDetails = await Promise.all(
+          recipeIDs.map(async (id) => {
+            const response = await axios.get(
+              `http://localhost:3000/api/recipes/id/${id}`
+            );
+            return response.data;
+          })
+        );
+
+        setRecipes(recipeDetails);
       } catch (error) {
         console.error("Error in MealPlanRecipesOverlay: ", error.message);
       }
     };
 
-    getIDPairs();
+    fetchRecipes();
   }, [mealPlanID, isOpen]);
 
   if (!isOpen) {
@@ -32,9 +45,9 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
       <div className="bg-white p-4">
         <h2>Recipes</h2>
         <ul>
-          {IDPairs.map((pair, index) => (
+          {recipes.map((recipe, index) => (
             <li key={index}>
-              Recipe ID: {pair.recipeID} - Meal Plan ID: {pair.mealPlanID}
+              <MealPlanRecipesCard recipe={recipe} />
             </li>
           ))}
         </ul>
