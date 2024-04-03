@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import MealPlanRecipesCard from "./MealPlanRecipesCard";
 
 const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
-  //   const [IDPairs, setIDPairs] = useState([]);
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -23,7 +22,10 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
             const response = await axios.get(
               `http://localhost:3000/api/recipes/id/${id}`
             );
-            return response.data;
+            const ratings = await axios.get(
+              `http://localhost:3000/api/recipes/ratingsid/${id}`
+            );
+            return { ...response.data, ratings: ratings.data };
           })
         );
 
