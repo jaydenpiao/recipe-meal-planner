@@ -5,6 +5,7 @@ import NutritionOverlay from "@/components/NutritionOverlay";
 import axios from "axios";
 import RatingsOverlay from "@/components/RatingsOverlay";
 import ReviewsOverlay from "@/components/ReviewsOverlay";
+import SearchBar from "@/components/SearchBar";
 
 const RecipesPage = () => {
   const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
@@ -53,6 +54,7 @@ const RecipesPage = () => {
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
       <div className="w-full">
+        <SearchBar />
         {recipes.map((recipe) => (
           <RecipeCard
             key={recipe.recipeID}
