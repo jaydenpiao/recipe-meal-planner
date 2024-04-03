@@ -2,35 +2,26 @@ import React, { useState, useEffect } from "react";
 import RecipeCard from "@/components/RecipeCard";
 import RecipeOverlay from "@/components/RecipeOverlay";
 import NutritionOverlay from "@/components/NutritionOverlay";
+import axios from "axios";
 
 const RecipesPage = () => {
   const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
   const [isNutritionOverlayOpen, setNutritionOverlayOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
-  const recipes = [
-    {
-      name: "Spaghetti",
-      rating: 4,
-      reviews: 2,
-      recipe: "1. cheese 2. sauce 3. pasta",
-      nutritionInfo: ["1000 calories", "10 fat", "1 protein"],
-    },
-    {
-      name: "Pizza",
-      rating: 4,
-      reviews: 2,
-      recipe: "1. cheese 2. sauce 3. dough",
-      nutritionInfo: ["1200 calories", "10 fat", "1 protein"],
-    },
-    {
-      name: "Potatoes",
-      rating: 4,
-      reviews: 2,
-      recipe: "1. potatoes",
-      nutritionInfo: ["500 calories", "10 fat", "1 protein"],
-    },
-  ];
+  const getRecipes = async (recipe) => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/recipes");
+      setRecipes(response.data);
+    } catch (error) {
+      console.error("Error in RecipesPage: ", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
 
   const handleRecipeClick = (recipe) => {
     setCurrentRecipe(recipe);
@@ -46,9 +37,9 @@ const RecipesPage = () => {
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
       <div className="w-full">
-        {recipes.map((recipe, index) => (
+        {recipes.map((recipe) => (
           <RecipeCard
-            key={index}
+            key={recipe.recipeID}
             recipe={recipe}
             onRecipeClick={() => handleRecipeClick(recipe)}
             onNutritionClick={() => handleNutritionClick(recipe)}
@@ -62,7 +53,7 @@ const RecipesPage = () => {
         <NutritionOverlay
           isOpen={isNutritionOverlayOpen}
           onClose={() => setNutritionOverlayOpen(false)}
-          nutritionInfo={currentRecipe?.nutritionInfo}
+          nutritionInfo={currentRecipe?.instructions} // should be currentRecipe?.nutritionInfo
         />
       </div>
     </div>
