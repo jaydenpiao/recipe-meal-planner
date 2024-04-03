@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MealPlanRecipesCard from "./MealPlanRecipesCard";
+import RatingsOverlay from "./RatingsOverlay";
 
 const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
   const [recipes, setRecipes] = useState([]);
+  const [isRatingsOverlayOpen, setRatingsOverlayOpen] = useState(false);
+  const [currentRecipeID, setCurrentRecipeID] = useState(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -38,6 +41,11 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
     fetchRecipes();
   }, [mealPlanID, isOpen]);
 
+  const handleRatingsClick = (recipeID) => {
+    setCurrentRecipeID(recipeID);
+    setRatingsOverlayOpen(true);
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -49,12 +57,20 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
         <ul>
           {recipes.map((recipe, index) => (
             <li key={index}>
-              <MealPlanRecipesCard recipe={recipe} />
+              <MealPlanRecipesCard
+                recipe={recipe}
+                onRatingsClick={() => handleRatingsClick(recipe.recipeID)}
+              />
             </li>
           ))}
         </ul>
         <Button onClick={onClose}>Close</Button>
       </div>
+      <RatingsOverlay
+        isOpen={isRatingsOverlayOpen}
+        onClose={() => setRatingsOverlayOpen(false)}
+        recipeID={currentRecipeID}
+      />
     </div>
   );
 };
