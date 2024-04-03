@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/UserContext";
 
 export function ButtonWithIcon({ onClick, buttonText }) {
   return (
@@ -18,12 +17,15 @@ export function ButtonWithIcon({ onClick, buttonText }) {
 const NavBar = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState();
+  const { setSelectedUserID } = useUser();
+  // const [selectedUserID, setSelectedUserID] = useState();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = () => setIsDropdownVisible(!isDropdownVisible);
 
   const handleSelectUser = (user) => {
     setSelectedUser(user.username);
+    setSelectedUserID(user.userID);
     setIsDropdownVisible(false);
     // console.log(user);
     console.log("Selected username: ", user.username);
