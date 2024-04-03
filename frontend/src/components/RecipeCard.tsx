@@ -1,4 +1,9 @@
-const RecipeCard = ({ recipe, onRecipeClick, onNutritionClick }) => {
+const RecipeCard = ({
+  recipe,
+  onRatingsClick,
+  onRecipeClick,
+  onNutritionClick,
+}) => {
   // Placeholder functions for button clicks
   const handleReviewsClick = () => alert("Reviews");
   const handleRecipeClick = () => alert("Recipe Details");
@@ -11,7 +16,10 @@ const RecipeCard = ({ recipe, onRecipeClick, onNutritionClick }) => {
     <div className="border p-4 m-2 grid grid-cols-6">
       <h2>{recipe.name}</h2>
       {/* TODO: need to get rating somehow */}
-      <p>Rating: {formattedRating}/5</p>
+      {/* <p>Rating: {formattedRating}/5</p> */}
+      <button onClick={() => onRatingsClick(recipe)}>
+        Rating: {formattedRating}/5
+      </button>
       {/* TODO: need to get reviews somehow */}
       <button onClick={handleReviewsClick}>{recipe.reviews} Reviews</button>
       <button onClick={() => onRecipeClick(recipe)}>Recipe</button>
