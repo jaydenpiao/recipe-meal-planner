@@ -1,8 +1,9 @@
 import express, { Router } from 'express';
 import mealplanController from '../controllers/mealplan.controller';
 
-const recipeRouter: Router = express.Router();
+const mealPlanRouter: Router = express.Router();
 
-recipeRouter.get('/id/:id', mealplanController.getMealPlansByUser);
+mealPlanRouter.get('/id/:id', mealplanController.getMealPlansByUser);
+mealPlanRouter.post('/', mealplanController.createMealPlanForUser);
 
-export default recipeRouter;
+export default mealPlanRouter;

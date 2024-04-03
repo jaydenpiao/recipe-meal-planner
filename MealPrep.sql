@@ -39,14 +39,13 @@ CREATE TABLE Recipe (
 );
 
 CREATE TABLE MealPlan (
-    mealPlanID INTEGER,
-    name VARCHAR(50),
+    mealPlanID INTEGER AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) UNIQUE,
     date DATE,
     userID INTEGER,
-    PRIMARY KEY (mealPlanID),
-    UNIQUE (name, userID),
     FOREIGN KEY (userID) REFERENCES User(userID)
 );
+
 
 
 
