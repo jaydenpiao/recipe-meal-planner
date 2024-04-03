@@ -23,8 +23,8 @@ const controller = {
   },
   
   createMealPlanForUser: async (req: Request, res: Response): Promise<void> => {
-    const userID = parseInt(req.body.userID);
-    const name = req.body.name;
+    const userID = parseInt(req.params.userID);
+    const name = req.params.name;
 
     // Check if userID or name is missing
     if (!userID || !name) {
@@ -49,7 +49,51 @@ const controller = {
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
+  },
+
+  editMealPlanName: async (req: Request, res: Response): Promise<void> => {
+    const mealPlanID = parseInt(req.params.id);
+    const newName = req.params.name;
+
+    if (!mealPlanID || !newName) {
+        res.status(400).json({ error: 'Missing mealPlanID or newName' });
+        return;
+    }
+
+    try {
+        await mealPlanService.editMealPlanName(mealPlanID, newName);
+        res.status(200).json({ message: 'Meal plan name updated successfully' });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+},
+addRecipe: async (req: Request, res: Response): Promise<void> => {
+  const mealPlanID = parseInt(req.params.mealPlanID);
+  const recipeID = parseInt(req.params.recipeID);
+
+  if (!mealPlanID || !recipeID) {
+      res.status(400).json({ error: 'Missing mealPlanID or recipeID' });
+      return;
   }
+
+  try {
+      await mealPlanService.addRecipe(mealPlanID, recipeID);
+      res.status(200).json({ message: 'Recipe added to meal plan successfully' });
+  } catch (error: any) {
+      res.status(500).json({ error: error.message });
+  }
+},
+deleteRecipe: async (req: Request, res: Response): Promise<void> => {
+  const mealPlanID = parseInt(req.params.mealPlanID);
+  const recipeID = parseInt(req.params.recipeID);
+
+  try {
+      await mealPlanService.deleteRecipe(mealPlanID, recipeID);
+      res.status(200).json({ message: 'Recipe deleted from meal plan successfully' });
+  } catch (error: any) {
+      res.status(500).json({ error: error.message });
+  }
+}
 
 }
 export default controller;
