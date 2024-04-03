@@ -3,10 +3,19 @@ import { RowDataPacket, FieldPacket } from 'mysql2';
 
 interface Recipe {
   recipeID: number;
-  name: string;
+  name?: string;
   instructions?: string;
   rating?: number;
   count?: number;
+  date?: string;
+  message?: string;
+  userID?: number;
+  reviewID?: number;
+  calories?: number;
+  sugar?: number;
+  protein?: number;
+  fat?: number;
+  carbs?: number;
 }
 
 const recipeService = {
@@ -102,8 +111,46 @@ const recipeService = {
       throw new Error(`Error fetching recipes: ${error}`);
     }
   },
+  getRecipeReviews: async (recipeID: number): Promise<Recipe[]> => {
+    try {
+      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
+        'SELECT * ' +
+        'FROM Review ' +
+        'WHERE recipeID = ? ',[recipeID]
+        );
+      if (!rows) return [];
+      return rows.map(row => ({
+        recipeID: row.recipeID,
+        userID: row.userID,
+        date: row.date,
+        message: row.message
+      }));
+    } catch (error) {
+      throw new Error(`Error fetching review: ${error}`);
+    }
+  },
+  getRecipeNutrition: async (recipeID: number): Promise<Recipe[]> => {
+    try {
+      const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
+        'SELECT * ' +
+        'FROM nutritionInfoRecipe ' +
+        'WHERE recipeID = ? ',[recipeID]
+        );
+      if (!rows) return [];
+      return rows.map(row => ({
+        recipeID: row.recipeID,
+        calories: row.calories,
+        sugar: row.sugar,
+        protein: row.proteinContent,
+        fat: row.fatContent,
+        carbs: row.fatContent
+      }));
+    } catch (error) {
+      throw new Error(`Error fetching nutrition: ${error}`);
+    }
+  },
 
-  
+
 };
 
 export default recipeService;
