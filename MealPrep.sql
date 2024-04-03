@@ -210,23 +210,23 @@ INSERT INTO Ingredient (name, isVegetarian) VALUES
 ('Chicken', FALSE);
 
 INSERT INTO Recipe (recipeID, name, instructions) VALUES
-(1, 'Pizza', 'recipe text...'),
-(2, 'Pasta', 'recipe text...'),
-(3, 'Burger', 'recipe text...'),
-(4, 'Fries', 'recipe text...'),
-(5, 'Grilled Cheese Sandwich', 'recipe text...'),
-(6, 'Salad', 'recipe text...'),
-(7, 'Vegetarian Pasta', 'recipe text...'),
-(8, 'Vegetarian Pizza', 'recipe text...'),
-(9, 'Vegetarian Burger', 'recipe text...'),
-(10, 'Quinoa', 'recipe text...'),
-(11, 'Low Calorie Pizza', 'recipe text...'),
-(12, 'Low Calorie Pasta', 'recipe text...'),
-(13, 'Sugar Free Pizza', 'recipe text...'),
-(14, 'Sugar Free Pasta', 'recipe text...'),
-(15, 'Sugar Free Burger', 'recipe text...'),
-(16, 'Sugar Free Fries', 'recipe text...'),
-(17, 'Sugar Free Sandwich', 'recipe text...');
+(1, 'Pizza', 'cheese, tomato sauce, dough, toppings...'),
+(2, 'Pasta', 'noodles, sauces, meat...'),
+(3, 'Burger', 'bun, patty, lettuce, tomato...'),
+(4, 'Fries', 'potatoes, oil, salt...'),
+(5, 'Grilled Cheese Sandwich', 'bread, cheese, butter...'),
+(6, 'Salad', 'lettuce, dressing, toppings...'),
+(7, 'Vegetarian Pasta', 'noodles, sauces, vegetables...'),
+(8, 'Vegetarian Pizza', 'cheese, tomato sauce, dough, vegetables...'),
+(9, 'Vegetarian Burger', 'bun, patty, lettuce, tomato, vegetables...'),
+(10, 'Quinoa', 'quinoa, vegetables, sauce...'),
+(11, 'Low Calorie Pizza', 'cheese, tomato sauce, dough, toppings...'),
+(12, 'Low Calorie Pasta', 'noodles, sauces, meat...'),
+(13, 'Sugar Free Pizza', 'cheese, tomato sauce, dough, toppings...'),
+(14, 'Sugar Free Pasta', 'noodles, sauces, meat...'),
+(15, 'Sugar Free Burger', 'bun, patty, lettuce, tomato...'),
+(16, 'Sugar Free Fries', 'potatoes, oil, salt...'),
+(17, 'Sugar Free Sandwich', 'bread, cheese, butter...');
 
 INSERT INTO MealPlan (mealPlanID, name, date, userID) VALUES
 (1, 'Normal Plan', '2024-03-01', 1),
