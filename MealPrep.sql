@@ -131,16 +131,12 @@ CREATE TABLE mealPlanContains (
 CREATE TABLE ShoppingList (
     shoppingListID INTEGER,
     mealPlanID INTEGER,
-    recipeID INTEGER,
-    ingredientName VARCHAR(50),
     PRIMARY KEY (shoppingListID),
-    FOREIGN KEY (mealPlanID, recipeID) REFERENCES mealPlanContains(mealPlanID, recipeID)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    FOREIGN KEY (ingredientName) REFERENCES Ingredient(name)
+    FOREIGN KEY (mealPlanID) REFERENCES MealPlan(mealPlanID)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
 
 CREATE TABLE listContains (
     shoppingListID INTEGER,
@@ -148,8 +144,13 @@ CREATE TABLE listContains (
     PRIMARY KEY (shoppingListID, ingredientName),
     FOREIGN KEY (shoppingListID) REFERENCES ShoppingList(shoppingListID)
         ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (ingredientName) REFERENCES Ingredient(name)
+        ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+
 
 CREATE TABLE Rating (
     ratingID INTEGER,
@@ -324,20 +325,19 @@ INSERT INTO recipeContains (recipeID, ingredientName) VALUES
 INSERT INTO mealPlanContains (mealPlanID, recipeID) VALUES
 (1, 1), (1, 2), (2, 3), (3, 6), (4, 10), (5, 11), (6, 6), (6, 10), (7,8), (8, 13), (8,14), (8,15);
 
-INSERT INTO ShoppingList (shoppingListID, mealPlanID, recipeID, ingredientName) VALUES
-(1, 1, 1, 'Salt'),
-(2, 1, 2, 'Tomato'),
-(3, 2, 3, 'Beef'),
-(4, 3, 6, 'Rice'),
-(5, 4, 10, 'Noodles'),
-(6, 5, 11, 'Chicken'),
-(7, 6, 6, 'Lettuce'),
-(8, 6, 10, 'Quinoa'),
-(9, 7, 8, 'Tomato'),
-(10, 8, 13, 'Tomato'),
-(11, 8, 14, 'Noodles'),
-(12, 8, 15, 'Beef');
-
+INSERT INTO ShoppingList (shoppingListID, mealPlanID) VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 3),
+(5, 4),
+(6, 5),
+(7, 6),
+(8, 6),
+(9, 7),
+(10, 8),
+(11, 8),
+(12, 8);
 
 
 INSERT INTO listContains (shoppingListID, ingredientName) VALUES
