@@ -93,6 +93,16 @@ deleteRecipe: async (req: Request, res: Response): Promise<void> => {
   } catch (error: any) {
       res.status(500).json({ error: error.message });
   }
+},
+getRecipe: async (req: Request, res: Response): Promise<void> => {
+  const mealPlanID = parseInt(req.params.id);
+
+  try {
+      const recipes = await mealPlanService.getRecipe(mealPlanID);
+      res.status(200).json(recipes);
+  } catch (error: any) {
+      res.status(500).json({ error: error.message });
+  }
 }
 
 }
