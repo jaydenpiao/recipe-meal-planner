@@ -43,7 +43,6 @@ CREATE TABLE MealPlan (
     name VARCHAR(50),
     date DATE,
     userID INTEGER,
-    PRIMARY KEY (mealPlanID),
     FOREIGN KEY (userID) REFERENCES User(userID)
 );
 
