@@ -53,11 +53,29 @@ const mealPlanService = {
     } catch (error) {
         throw new Error(`Error creating meal plan: ${error}`);
     }
+},
+
+deleteMealPlan: async (mealPlanID: number): Promise<void> => {
+  try {
+    // Check if the meal plan exists
+    const [existingMealPlans]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
+      'SELECT * FROM MealPlan WHERE mealPlanID = ?', [mealPlanID]
+    );
+
+    if (existingMealPlans.length === 0) {
+      throw new Error('Meal plan not found');
+    }
+
+    // Delete the meal plan
+    await connection.promise().query('DELETE FROM MealPlan WHERE mealPlanID = ?', [mealPlanID]);
+    await connection.promise().query('DELETE FROM MealPlanrecipes WHERE mealPlanID = ?', [mealPlanID]);
+
+  } catch (error) {
+    throw new Error(`Error deleting meal plan: ${error}`);
+  }
 }
 
 
-
-  //deleteMealPlan:
   //editMealPlanName:
   //addRecipe:
   //deleteRecipe:

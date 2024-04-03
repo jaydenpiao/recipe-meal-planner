@@ -38,6 +38,17 @@ const controller = {
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
+  },
+
+  deleteMealPlan: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const mealPlanID: number = parseInt(req.params.mealPlanID);
+
+      await mealPlanService.deleteMealPlan(mealPlanID);
+      res.status(200).json({ message: 'Meal plan deleted successfully' });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   }
 
 }
