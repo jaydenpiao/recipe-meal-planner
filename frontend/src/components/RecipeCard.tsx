@@ -6,9 +6,6 @@ const RecipeCard = ({
   onNutritionClick,
 }) => {
   // Placeholder functions for button clicks
-  const handleReviewsClick = () => alert("Reviews");
-  const handleRecipeClick = () => alert("Recipe Details");
-  const handleNutritionClick = () => alert("Nutrition Info");
   const handleAddToMealPlanClick = () => alert("Added to Meal Plan");
 
   const formattedRating = Number(recipe.avgrating).toFixed(1);

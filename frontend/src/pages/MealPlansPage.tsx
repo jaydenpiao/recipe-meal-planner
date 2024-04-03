@@ -3,6 +3,7 @@ import ShoppingListOverlay from "@/components/ShoppingListOverlay";
 import MealPlanCard from "@/components/MealPlanCard";
 import { useUser } from "@/context/UserContext";
 import axios from "axios";
+import MealPlanRecipesOverlay from "@/components/MealPlanRecipesOverlay";
 
 const MealPlansPage = () => {
   const { selectedUserID } = useUser();
@@ -56,12 +57,12 @@ const MealPlansPage = () => {
             onDeleteSuccess={handleDeleteSuccess}
           />
         ))}
-        {/* <RecipesOverlay
+        <MealPlanRecipesOverlay
           mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isRecipesOverlayOpen}
           onClose={() => setRecipesOverlayOpen(false)}
         />
-        <ShoppingListOverlay
+        {/* <ShoppingListOverlay
           mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isShoppingListOverlayOpen}
           onClose={() => setShoppingListOverlayOpen(false)}
