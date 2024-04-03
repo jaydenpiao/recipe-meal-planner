@@ -14,6 +14,7 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
   const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
   const [isNutritionOverlayOpen, setNutritionOverlayOpen] = useState(false);
   const [currentRecipeID, setCurrentRecipeID] = useState(null);
+  const [currentRecipe, setCurrentRecipe] = useState(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -58,7 +59,7 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
   };
 
   const handleRecipeClick = (recipe) => {
-    setCurrentRecipeID(recipe.recipeID);
+    setCurrentRecipe(recipe);
     setRecipeOverlayOpen(true);
   };
 
@@ -103,12 +104,12 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
       <RecipeOverlay
         isOpen={isRecipeOverlayOpen}
         onClose={() => setRecipeOverlayOpen(false)}
-        recipeID={currentRecipeID}
+        recipe={currentRecipe}
       />
       <NutritionOverlay
         isOpen={isNutritionOverlayOpen}
         onClose={() => setNutritionOverlayOpen(false)}
-        recipeID={currentRecipeID}
+        recipe={currentRecipeID}
       />
     </div>
   );
