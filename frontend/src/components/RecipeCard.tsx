@@ -8,10 +8,13 @@ const RecipeCard = ({ recipe, onRecipeClick, onNutritionClick }) => {
   return (
     <div className="border p-4 m-2 grid grid-cols-6">
       <h2>{recipe.name}</h2>
+      {/* TODO: need to get rating somehow */}
       <p>Rating: {recipe.rating}/5</p>
+      {/* TODO: need to get reviews somehow */}
       <button onClick={handleReviewsClick}>{recipe.reviews} Reviews</button>
       <button onClick={() => onRecipeClick(recipe)}>Recipe</button>
       <button onClick={() => onNutritionClick(recipe)}>Nutrition Info</button>
+      {/* TODO */}
       <button onClick={handleAddToMealPlanClick}>Add to Meal Plan</button>
     </div>
   );
