@@ -9,7 +9,7 @@ mealPlanRouter.delete('/:mealPlanID', mealplanController.deleteMealPlan);
 mealPlanRouter.put('/:id/:name', mealplanController.editMealPlanName);
 mealPlanRouter.post('/addrecipe/:mealPlanID/:recipeID', mealplanController.addRecipe);
 mealPlanRouter.delete('/deleterecipe/:mealPlanID/:recipeID', mealplanController.deleteRecipe);
-mealPlanRouter.get('mealplanID/:id', mealplanController.getRecipe);
+mealPlanRouter.get('/mealplanID/:id', mealplanController.getRecipe);
 
 
 export default mealPlanRouter;
