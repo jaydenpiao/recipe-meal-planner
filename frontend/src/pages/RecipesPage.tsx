@@ -30,6 +30,18 @@ const RecipesPage = () => {
     getRecipes();
   }, []);
 
+  const searchRecipes = async (searchCriteria) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/recipes/search",
+        searchCriteria
+      );
+      setRecipes(response.data);
+    } catch (error) {
+      console.error("Error searching recipes: ", error.message);
+    }
+  };
+
   const handleRecipeClick = (recipe) => {
     setCurrentRecipe(recipe);
     setRecipeOverlayOpen(true);
@@ -54,7 +66,7 @@ const RecipesPage = () => {
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
       <div className="w-full">
-        <SearchBar />
+        <SearchBar onSearch={searchRecipes} />
         {recipes.map((recipe) => (
           <RecipeCard
             key={recipe.recipeID}
