@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import MealPlanRecipesCard from "./MealPlanRecipesCard";
 import RatingsOverlay from "./RatingsOverlay";
 import ReviewsOverlay from "./ReviewsOverlay";
+import RecipeOverlay from "./RecipeOverlay";
+import NutritionOverlay from "./NutritionOverlay";
 
 const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
   const [recipes, setRecipes] = useState([]);
   const [isRatingsOverlayOpen, setRatingsOverlayOpen] = useState(false);
   const [isReviewsOverlayOpen, setReviewsOverlayOpen] = useState(false);
+  const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
+  const [isNutritionOverlayOpen, setNutritionOverlayOpen] = useState(false);
   const [currentRecipeID, setCurrentRecipeID] = useState(null);
 
   useEffect(() => {
@@ -53,6 +57,16 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
     setReviewsOverlayOpen(true);
   };
 
+  const handleRecipeClick = (recipe) => {
+    setCurrentRecipeID(recipe.recipeID);
+    setRecipeOverlayOpen(true);
+  };
+
+  const handleNutritionClick = (recipeID) => {
+    setCurrentRecipeID(recipeID);
+    setNutritionOverlayOpen(true);
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -68,6 +82,8 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
                 recipe={recipe}
                 onRatingsClick={() => handleRatingsClick(recipe.recipeID)}
                 onReviewsClick={() => handleReviewsClick(recipe.recipeID)}
+                onRecipeClick={() => handleRecipeClick(recipe)}
+                onNutritionClick={() => handleNutritionClick(recipe.recipeID)}
               />
             </li>
           ))}
@@ -82,6 +98,16 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
       <ReviewsOverlay
         isOpen={isReviewsOverlayOpen}
         onClose={() => setReviewsOverlayOpen(false)}
+        recipeID={currentRecipeID}
+      />
+      <RecipeOverlay
+        isOpen={isRecipeOverlayOpen}
+        onClose={() => setRecipeOverlayOpen(false)}
+        recipeID={currentRecipeID}
+      />
+      <NutritionOverlay
+        isOpen={isNutritionOverlayOpen}
+        onClose={() => setNutritionOverlayOpen(false)}
         recipeID={currentRecipeID}
       />
     </div>
