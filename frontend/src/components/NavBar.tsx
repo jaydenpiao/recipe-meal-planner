@@ -56,9 +56,8 @@ const NavBar = () => {
           buttonText={selectedUser || "Choose User"}
         />
         {isDropdownVisible && (
-          <div className="absolute z-10 mt-2 rounded-lg bg-gray-300 w-full text-center text-lg">
+          <div className="absolute z-30 mt-2 rounded-lg bg-gray-300 w-full text-center text-lg opacity-100">
             {users.map((user) => (
-              // href={`/user/${user.userID}`}
               <div key={user.userID}>
                 <a
                   onClick={() => handleSelectUser(user)}
