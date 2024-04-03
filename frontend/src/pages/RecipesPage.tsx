@@ -12,7 +12,9 @@ const RecipesPage = () => {
 
   const getRecipes = async (recipe) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/recipes");
+      const response = await axios.get(
+        "http://localhost:3000/api/recipes/avgrating"
+      );
       setRecipes(response.data);
     } catch (error) {
       console.error("Error in RecipesPage: ", error.message);

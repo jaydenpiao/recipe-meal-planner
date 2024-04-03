@@ -5,11 +5,13 @@ const RecipeCard = ({ recipe, onRecipeClick, onNutritionClick }) => {
   const handleNutritionClick = () => alert("Nutrition Info");
   const handleAddToMealPlanClick = () => alert("Added to Meal Plan");
 
+  const formattedRating = Number(recipe.avgrating).toFixed(1);
+
   return (
     <div className="border p-4 m-2 grid grid-cols-6">
       <h2>{recipe.name}</h2>
       {/* TODO: need to get rating somehow */}
-      <p>Rating: {recipe.rating}/5</p>
+      <p>Rating: {formattedRating}/5</p>
       {/* TODO: need to get reviews somehow */}
       <button onClick={handleReviewsClick}>{recipe.reviews} Reviews</button>
       <button onClick={() => onRecipeClick(recipe)}>Recipe</button>
