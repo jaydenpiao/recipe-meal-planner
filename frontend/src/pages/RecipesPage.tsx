@@ -63,7 +63,7 @@ const RecipesPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center overflow-auto mt-24">
+    <div className="flex flex-col items-center overflow-visible mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
       <div className="w-full">
         <SearchBar onSearch={searchRecipes} />

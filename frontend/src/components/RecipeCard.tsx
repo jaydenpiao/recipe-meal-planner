@@ -69,7 +69,7 @@ const RecipeCard = ({
           <ChevronDownIcon className="ml-1 h-5 w-4" />
         </button>
         {isAddToMealPlanDropdownVisible && (
-          <div className="absolute mt-2 bg-gray-300 text-center text-lg w-full opacity-100 z-10">
+          <div className="absolute mt-2 bg-gray-300 text-center text-lg w-full opacity-100 z-50">
             {mealplans.map((plan) => (
               <div
                 key={plan.mealPlanID}
