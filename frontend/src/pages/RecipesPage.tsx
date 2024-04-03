@@ -14,11 +14,7 @@ const RecipesPage = () => {
   const [isReviewsOverlayOpen, setReviewsOverlayOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [recipes, setRecipes] = useState([]);
-  const [mealplans, setMealPlans] = useState([
-    { id: 1, name: "Meal Plan 1" },
-    { id: 2, name: "Meal Plan 2" },
-    { id: 3, name: "Meal Plan 3" },
-  ]);
+
   const getRecipes = async (recipe) => {
     try {
       const response = await axios.get(
@@ -33,7 +29,6 @@ const RecipesPage = () => {
   useEffect(() => {
     getRecipes();
   }, []);
-
 
   const searchRecipes = async (searchCriteria) => {
     try {
@@ -76,8 +71,6 @@ const RecipesPage = () => {
           <RecipeCard
             key={recipe.recipeID}
             recipe={recipe}
-            mealplans={mealplans}
-            onAddToMealPlan={handleAddRecipeToMealPlan}
             onRatingsClick={() => handleRatingsClick(recipe)}
             onReviewsClick={() => handleReviewsClick(recipe)}
             onRecipeClick={() => handleRecipeClick(recipe)}
