@@ -13,6 +13,7 @@ const MealPlansPage = () => {
   const [mealplans, setMealPlans] = useState([]);
 
   const getMealPlans = async (mealplan) => {
+    if (!selectedUserID) return;
     try {
       console.log("Fetching mealplan for userID: ", selectedUserID);
       const response = await axios.get(
@@ -50,7 +51,7 @@ const MealPlansPage = () => {
             onShoppingListClick={() => handleShoppingListClick(mealplan)}
           />
         ))}
-        <RecipesOverlay
+        {/* <RecipesOverlay
           mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isRecipesOverlayOpen}
           onClose={() => setRecipesOverlayOpen(false)}
@@ -59,7 +60,7 @@ const MealPlansPage = () => {
           mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isShoppingListOverlayOpen}
           onClose={() => setShoppingListOverlayOpen(false)}
-        />
+        /> */}
       </div>
     </div>
   );
