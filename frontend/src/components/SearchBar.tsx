@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+
+const Checkbox = ({ id, checked, onChange }) => (
+  <input type="checkbox" id={id} checked={checked} onChange={onChange} />
+);
 
 const SearchBar = ({ onSearch }) => {
   const [searchName, setSearchName] = useState("");
@@ -41,38 +45,35 @@ const SearchBar = ({ onSearch }) => {
           </option>
         ))}
       </select>
-      <Checkbox
-        id="sugarFree"
-        checked={sugarFree}
-        onChange={(e) => setSugarFree(e.target.checked)}
-      />
-      <label htmlFor="sugarFree">Sugar Free</label>
-      <Checkbox
-        id="lowCalorie"
-        checked={lowCalorie}
-        onChange={(e) => setLowCalorie(e.target.checked)}
-      />
-      <label htmlFor="lowCalorie">Low Calorie</label>
-      <Checkbox
-        id="vegetarian"
-        checked={vegetarian}
-        onChange={(e) => setVegetarian(e.target.checked)}
-      />
-      <label htmlFor="vegetarian">Vegetarian</label>
+      <div className="p-2 flex rounded-lg border space-x-1">
+        <Checkbox
+          id="sugarFree"
+          checked={sugarFree}
+          onChange={(e) => setSugarFree(e.target.checked)}
+        />
+        <label htmlFor="sugarFree">Sugar Free</label>
+      </div>
+
+      <div className="p-2 flex rounded-lg border space-x-1">
+        <Checkbox
+          id="lowCalorie"
+          checked={lowCalorie}
+          onChange={(e) => setLowCalorie(e.target.checked)}
+        />
+        <label htmlFor="lowCalorie">Low Calorie</label>
+      </div>
+
+      <div className="p-2 flex rounded-lg border space-x-1">
+        <Checkbox
+          id="vegetarian"
+          checked={vegetarian}
+          onChange={(e) => setVegetarian(e.target.checked)}
+        />
+        <label htmlFor="vegetarian">Vegetarian</label>
+      </div>
       <Button type="button" onClick={handleSearch}>
         Search
       </Button>
-
-      {/* <Button type="submit">Search</Button>
-      <div className="p-3 m-2 flex rounded-lg border border-gray-400 space-x-1">
-        <Checkbox id="potato" />
-        <label
-          htmlFor="potato"
-          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed"
-        >
-          potato
-        </label>
-      </div> */}
     </div>
   );
 };
