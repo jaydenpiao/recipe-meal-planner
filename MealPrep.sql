@@ -47,9 +47,6 @@ CREATE TABLE MealPlan (
     UNIQUE (userID, name)
 );
 
-
-
-
 CREATE TABLE Category (
     name VARCHAR(50),
     category VARCHAR(50) NOT NULL,
