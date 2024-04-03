@@ -12,7 +12,7 @@ const RecipeCard = ({
 
   return (
     <div className="border p-4 m-2 grid grid-cols-6">
-      <h2>{recipe.name}</h2>
+      <p>{recipe.name}</p>
       <button onClick={() => onRatingsClick(recipe)}>
         Rating: {formattedRating}/5
       </button>

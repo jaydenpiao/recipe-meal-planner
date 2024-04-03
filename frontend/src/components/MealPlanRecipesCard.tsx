@@ -1,6 +1,6 @@
 import React from "react";
 
-const MealPlanRecipesCard = ({ recipe, onRatingsClick }) => {
+const MealPlanRecipesCard = ({ recipe, onRatingsClick, onReviewsClick }) => {
   const sumProductOfRatingsAndCounts = recipe.ratings.reduce(
     (acc, curr) => acc + curr.rating * curr.count,
     0
@@ -13,7 +13,10 @@ const MealPlanRecipesCard = ({ recipe, onRatingsClick }) => {
       <p>{recipe.recipeID}</p>
       <p>{recipe.name}</p>
       <p>{recipe.instructions}</p>
-      <button onClick={onRatingsClick}>Rating: {formattedRating}</button>
+      <button onClick={() => onRatingsClick(recipe)}>
+        Rating: {formattedRating}
+      </button>
+      <button onClick={() => onReviewsClick(recipe)}>Reviews</button>
     </div>
   );
 };

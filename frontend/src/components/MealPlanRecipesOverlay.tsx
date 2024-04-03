@@ -3,10 +3,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import MealPlanRecipesCard from "./MealPlanRecipesCard";
 import RatingsOverlay from "./RatingsOverlay";
+import ReviewsOverlay from "./ReviewsOverlay";
 
 const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
   const [recipes, setRecipes] = useState([]);
   const [isRatingsOverlayOpen, setRatingsOverlayOpen] = useState(false);
+  const [isReviewsOverlayOpen, setReviewsOverlayOpen] = useState(false);
   const [currentRecipeID, setCurrentRecipeID] = useState(null);
 
   useEffect(() => {
@@ -46,6 +48,11 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
     setRatingsOverlayOpen(true);
   };
 
+  const handleReviewsClick = (recipeID) => {
+    setCurrentRecipeID(recipeID);
+    setReviewsOverlayOpen(true);
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -60,6 +67,7 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
               <MealPlanRecipesCard
                 recipe={recipe}
                 onRatingsClick={() => handleRatingsClick(recipe.recipeID)}
+                onReviewsClick={() => handleReviewsClick(recipe.recipeID)}
               />
             </li>
           ))}
@@ -69,6 +77,11 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
       <RatingsOverlay
         isOpen={isRatingsOverlayOpen}
         onClose={() => setRatingsOverlayOpen(false)}
+        recipeID={currentRecipeID}
+      />
+      <ReviewsOverlay
+        isOpen={isReviewsOverlayOpen}
+        onClose={() => setReviewsOverlayOpen(false)}
         recipeID={currentRecipeID}
       />
     </div>
