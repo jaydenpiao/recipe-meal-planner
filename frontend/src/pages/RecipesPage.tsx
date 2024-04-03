@@ -81,7 +81,7 @@ const RecipesPage = () => {
         <NutritionOverlay
           isOpen={isNutritionOverlayOpen}
           onClose={() => setNutritionOverlayOpen(false)}
-          nutritionInfo={currentRecipe?.instructions} // should be currentRecipe?.nutritionInfo
+          recipeID={currentRecipe?.recipeID}
         />
       </div>
     </div>

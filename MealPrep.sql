@@ -222,9 +222,9 @@ INSERT INTO Ingredient (name, isVegetarian) VALUES
 ('Pepper', TRUE);
 
 INSERT INTO Recipe (recipeID, name, instructions) VALUES
-(1, 'Pizza', 'recipe text...'),
-(2, 'Pasta', 'recipe text...'),
-(3, 'Burger', 'recipe text...'),
+(1, 'Pizza', 'pizza instructions'),
+(2, 'Pasta', 'pasta instructions'),
+(3, 'Burger', 'burger instructions'),
 (4, 'Fries', 'recipe text...'),
 (5, 'Grilled Cheese Sandwich', 'recipe text...'),
 (6, 'Salad', 'recipe text...'),
