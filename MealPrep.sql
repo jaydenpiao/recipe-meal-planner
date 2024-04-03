@@ -40,10 +40,11 @@ CREATE TABLE Recipe (
 
 CREATE TABLE MealPlan (
     mealPlanID INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE,
+    name VARCHAR(50),
     date DATE,
     userID INTEGER,
-    FOREIGN KEY (userID) REFERENCES User(userID)
+    FOREIGN KEY (userID) REFERENCES User(userID),
+    UNIQUE (userID, name)
 );
 
 
