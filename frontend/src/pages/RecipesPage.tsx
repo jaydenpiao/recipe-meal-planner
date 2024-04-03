@@ -34,8 +34,17 @@ const RecipesPage = () => {
     getRecipes();
   }, []);
 
-  const handleAddRecipeToMealPlan = async (recipeId, mealPlanId) => {
-    console.log(`Mock: Add recipe ${recipeId} to meal plan ${mealPlanId}`);
+
+  const searchRecipes = async (searchCriteria) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/recipes/search",
+        searchCriteria
+      );
+      setRecipes(response.data);
+    } catch (error) {
+      console.error("Error searching recipes: ", error.message);
+    }
   };
 
   const handleRecipeClick = (recipe) => {
@@ -59,10 +68,10 @@ const RecipesPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center overflow-auto mt-24">
+    <div className="flex flex-col items-center overflow-visible mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
       <div className="w-full">
-        <SearchBar />
+        <SearchBar onSearch={searchRecipes} />
         {recipes.map((recipe) => (
           <RecipeCard
             key={recipe.recipeID}
