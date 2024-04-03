@@ -2,35 +2,32 @@ import React, { useState, useEffect } from "react";
 import RecipeCard from "@/components/RecipeCard";
 import RecipeOverlay from "@/components/RecipeOverlay";
 import NutritionOverlay from "@/components/NutritionOverlay";
+import axios from "axios";
+import RatingsOverlay from "@/components/RatingsOverlay";
+import ReviewsOverlay from "@/components/ReviewsOverlay";
 
 const RecipesPage = () => {
   const [isRecipeOverlayOpen, setRecipeOverlayOpen] = useState(false);
   const [isNutritionOverlayOpen, setNutritionOverlayOpen] = useState(false);
+  const [isRatingsOverlayOpen, setRatingsOverlayOpen] = useState(false);
+  const [isReviewsOverlayOpen, setReviewsOverlayOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
-  const recipes = [
-    {
-      name: "Spaghetti",
-      rating: 4,
-      reviews: 2,
-      recipe: "1. cheese 2. sauce 3. pasta",
-      nutritionInfo: ["1000 calories", "10 fat", "1 protein"],
-    },
-    {
-      name: "Pizza",
-      rating: 4,
-      reviews: 2,
-      recipe: "1. cheese 2. sauce 3. dough",
-      nutritionInfo: ["1200 calories", "10 fat", "1 protein"],
-    },
-    {
-      name: "Potatoes",
-      rating: 4,
-      reviews: 2,
-      recipe: "1. potatoes",
-      nutritionInfo: ["500 calories", "10 fat", "1 protein"],
-    },
-  ];
+  const getRecipes = async (recipe) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/recipes/avgrating"
+      );
+      setRecipes(response.data);
+    } catch (error) {
+      console.error("Error in RecipesPage: ", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getRecipes();
+  }, []);
 
   const handleRecipeClick = (recipe) => {
     setCurrentRecipe(recipe);
@@ -42,18 +39,40 @@ const RecipesPage = () => {
     setNutritionOverlayOpen(true);
   };
 
+  const handleRatingsClick = (recipe) => {
+    setCurrentRecipe(recipe);
+    setRatingsOverlayOpen(true);
+  };
+
+  const handleReviewsClick = (recipe) => {
+    setCurrentRecipe(recipe);
+    setReviewsOverlayOpen(true);
+  };
+
   return (
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Recipes Page</h1>
       <div className="w-full">
-        {recipes.map((recipe, index) => (
+        {recipes.map((recipe) => (
           <RecipeCard
-            key={index}
+            key={recipe.recipeID}
             recipe={recipe}
+            onRatingsClick={() => handleRatingsClick(recipe)}
+            onReviewsClick={() => handleReviewsClick(recipe)}
             onRecipeClick={() => handleRecipeClick(recipe)}
             onNutritionClick={() => handleNutritionClick(recipe)}
           />
         ))}
+        <RatingsOverlay
+          isOpen={isRatingsOverlayOpen}
+          onClose={() => setRatingsOverlayOpen(false)}
+          recipeID={currentRecipe?.recipeID}
+        />
+        <ReviewsOverlay
+          isOpen={isReviewsOverlayOpen}
+          onClose={() => setReviewsOverlayOpen(false)}
+          recipeID={currentRecipe?.recipeID}
+        />
         <RecipeOverlay
           isOpen={isRecipeOverlayOpen}
           onClose={() => setRecipeOverlayOpen(false)}
@@ -62,7 +81,7 @@ const RecipesPage = () => {
         <NutritionOverlay
           isOpen={isNutritionOverlayOpen}
           onClose={() => setNutritionOverlayOpen(false)}
-          nutritionInfo={currentRecipe?.nutritionInfo}
+          recipeID={currentRecipe?.recipeID}
         />
       </div>
     </div>
