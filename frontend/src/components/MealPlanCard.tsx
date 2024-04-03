@@ -1,6 +1,23 @@
-const MealPlanCard = ({ mealplan, onRecipesClick, onShoppingListClick }) => {
-  // Placeholder functions for button clicks
-  const handleDeleteMealPlanClick = () => alert("Deleted Meal Plan");
+import axios from "axios";
+
+const MealPlanCard = ({
+  mealplan,
+  onRecipesClick,
+  onShoppingListClick,
+  onDeleteSuccess,
+}) => {
+  const handleDeleteMealPlanClick = async () => {
+    try {
+      console.log("Deleting meal plan with ID: ", mealplan.mealPlanID);
+      const response = await axios.delete(
+        `http://localhost:3000/api/mealplan/${mealplan.mealPlanID}`
+      );
+      console.log("Delete meal plan response: ", response.data);
+      onDeleteSuccess();
+    } catch (error) {
+      console.error("Error in MealPlanCard: ", error.message);
+    }
+  };
 
   return (
     <div className="border p-4 m-2 grid grid-cols-4">

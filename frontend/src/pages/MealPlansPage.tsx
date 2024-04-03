@@ -17,7 +17,7 @@ const MealPlansPage = () => {
     try {
       console.log("Fetching mealplan for userID: ", selectedUserID);
       const response = await axios.get(
-        `http://localhost:3000/api/mealplan/id/${selectedUserID}`
+        `http://localhost:3000/api/mealplan/${selectedUserID}`
       );
       setMealPlans(response.data);
     } catch (error) {
@@ -39,6 +39,10 @@ const MealPlansPage = () => {
     setShoppingListOverlayOpen(true);
   };
 
+  const handleDeleteSuccess = () => {
+    getMealPlans();
+  };
+
   return (
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Meal Plans Page</h1>
@@ -49,6 +53,7 @@ const MealPlansPage = () => {
             mealplan={mealplan}
             onRecipesClick={() => handleRecipesClick(mealplan)}
             onShoppingListClick={() => handleShoppingListClick(mealplan)}
+            onDeleteSuccess={handleDeleteSuccess}
           />
         ))}
         {/* <RecipesOverlay
