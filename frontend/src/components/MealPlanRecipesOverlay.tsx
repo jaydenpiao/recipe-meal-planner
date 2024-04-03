@@ -16,35 +16,34 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
   const [currentRecipeID, setCurrentRecipeID] = useState(null);
   const [currentRecipe, setCurrentRecipe] = useState(null);
 
+  const fetchRecipes = async () => {
+    try {
+      console.log("Fetching recipes for mealPlanID: ", mealPlanID);
+      const idPairsResponse = await axios.get(
+        `http://localhost:3000/api/mealplan/mealplanid/${mealPlanID}`
+      );
+      const recipeIDs = idPairsResponse.data.map((pair) => pair.recipeID);
+
+      const recipeDetails = await Promise.all(
+        recipeIDs.map(async (id) => {
+          const response = await axios.get(
+            `http://localhost:3000/api/recipes/id/${id}`
+          );
+          const ratings = await axios.get(
+            `http://localhost:3000/api/recipes/ratingsid/${id}`
+          );
+          return { ...response.data, ratings: ratings.data };
+        })
+      );
+
+      setRecipes(recipeDetails);
+    } catch (error) {
+      console.error("Error in MealPlanRecipesOverlay: ", error.message);
+    }
+  };
+
   useEffect(() => {
     if (!isOpen) return;
-
-    const fetchRecipes = async () => {
-      try {
-        console.log("Fetching recipes for mealPlanID: ", mealPlanID);
-        const idPairsResponse = await axios.get(
-          `http://localhost:3000/api/mealplan/mealplanid/${mealPlanID}`
-        );
-        const recipeIDs = idPairsResponse.data.map((pair) => pair.recipeID);
-
-        const recipeDetails = await Promise.all(
-          recipeIDs.map(async (id) => {
-            const response = await axios.get(
-              `http://localhost:3000/api/recipes/id/${id}`
-            );
-            const ratings = await axios.get(
-              `http://localhost:3000/api/recipes/ratingsid/${id}`
-            );
-            return { ...response.data, ratings: ratings.data };
-          })
-        );
-
-        setRecipes(recipeDetails);
-      } catch (error) {
-        console.error("Error in MealPlanRecipesOverlay: ", error.message);
-      }
-    };
-
     fetchRecipes();
   }, [mealPlanID, isOpen]);
 
@@ -68,6 +67,10 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
     setNutritionOverlayOpen(true);
   };
 
+  const handleDeleteSuccess = () => {
+    fetchRecipes();
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -81,10 +84,12 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
             <li key={index}>
               <MealPlanRecipesCard
                 recipe={recipe}
+                mealplanID={mealPlanID}
                 onRatingsClick={() => handleRatingsClick(recipe.recipeID)}
                 onReviewsClick={() => handleReviewsClick(recipe.recipeID)}
                 onRecipeClick={() => handleRecipeClick(recipe)}
                 onNutritionClick={() => handleNutritionClick(recipe.recipeID)}
+                onDeleteSuccess={handleDeleteSuccess}
               />
             </li>
           ))}
@@ -109,7 +114,7 @@ const MealPlanRecipesOverlay = ({ mealPlanID, isOpen, onClose }) => {
       <NutritionOverlay
         isOpen={isNutritionOverlayOpen}
         onClose={() => setNutritionOverlayOpen(false)}
-        recipe={currentRecipeID}
+        recipeID={currentRecipeID}
       />
     </div>
   );
