@@ -219,6 +219,7 @@ INSERT INTO Ingredient (name, isVegetarian) VALUES
 ('Tomato', TRUE),
 ('Cheese', TRUE),
 ('Quinoa', TRUE),
+('Lettuce', TRUE),
 ('Pepper', TRUE);
 
 INSERT INTO Recipe (recipeID, name, instructions) VALUES
@@ -315,23 +316,33 @@ INSERT INTO nutritionInfoIngredient (ingredientName, calories, sugar, proteinCon
 ('Tomato', 20, 3, 1, 0, 5),
 ('Cheese', 100, 1, 7, 8, 2),
 ('Quinoa', 100, 0, 2, 0, 50),
-('Pepper', 40, 2, 1, 0, 9);
+('Pepper', 1, 2, 1, 0, 9),
+('Lettuce', 1, 0, 0 ,0, 10);
 
 INSERT INTO recipeContains (recipeID, ingredientName) VALUES
 (1, 'Salt'), (1, 'Chicken'), (2, 'Noodles'), (2, 'Beef'), (3, 'Beef');
 
 INSERT INTO mealPlanContains (mealPlanID, recipeID) VALUES
-(1, 1), (2, 3), (3, 6), (4, 10), (5, 11);
+(1, 1), (1, 2), (2, 3), (3, 6), (4, 10), (5, 11), (6, 6), (6, 10), (7,8), (8, 13), (8,14), (8,15);
 
 INSERT INTO ShoppingList (shoppingListID, mealPlanID, recipeID, ingredientName) VALUES
 (1, 1, 1, 'Salt'),
-(2, 2, 3, 'Beef'),
-(3, 3, 6, 'Rice'),
-(4, 4, 10, 'Noodles'),
-(5, 5, 11, 'Chicken');
+(2, 1, 2, 'Tomato'),
+(3, 2, 3, 'Beef'),
+(4, 3, 6, 'Rice'),
+(5, 4, 10, 'Noodles'),
+(6, 5, 11, 'Chicken'),
+(7, 6, 6, 'Lettuce'),
+(8, 6, 10, 'Quinoa'),
+(9, 7, 8, 'Tomato'),
+(10, 8, 13, 'Tomato'),
+(11, 8, 14, 'Noodles'),
+(12, 8, 15, 'Beef');
+
+
 
 INSERT INTO listContains (shoppingListID, ingredientName) VALUES
-(1, 'Salt'), (2, 'Chicken'), (2, 'Beef'), (3, 'Rice'), (4, 'Noodles');
+(1, 'Salt'),(1, 'Tomato'), (2, 'Chicken'), (2, 'Beef'), (3, 'Rice'), (4, 'Noodles'), (6, 'Lettuce'), (6, 'Quinoa'), (7, 'Tomato'),(9, 'Tomato'), (10, 'Tomato'), (11, 'Noodles'), (12, 'Beef');
 
 INSERT INTO Rating (ratingID, score, userID, recipeID) VALUES
 (1, 1, 1, 1),
@@ -452,7 +463,6 @@ INSERT INTO Review (reviewID, date, message, userID, recipeID) VALUES
 (55, '2024-04-24', 'Amazing', 12, 1),
 (56, '2024-04-25', 'Tasty', 12, 2),
 (57, '2024-04-26', 'Not bad', 12, 3);
-
 
 
 INSERT INTO saves (userID, recipeID) VALUES
