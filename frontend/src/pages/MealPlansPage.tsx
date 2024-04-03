@@ -17,7 +17,7 @@ const MealPlansPage = () => {
     try {
       console.log("Fetching mealplan for userID: ", selectedUserID);
       const response = await axios.get(
-        `http://localhost:3000/api/mealplan/id/${selectedUserID}`
+        `http://localhost:3000/api/mealplan/${selectedUserID}`
       );
       setMealPlans(response.data);
     } catch (error) {
