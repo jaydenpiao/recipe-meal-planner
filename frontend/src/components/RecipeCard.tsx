@@ -2,16 +2,6 @@ import { useUser } from "@/context/UserContext";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
-
-// export function ButtonWithIcon({ onClick, buttonText }) {
-//   return (
-//     <Button onClick={onClick} variant="ghost" className="text-2xl font-normal">
-//       {buttonText}
-//       <ChevronDownIcon className="ml-1 h-4 w-4" />
-//     </Button>
-//   );
-// }
 
 const RecipeCard = ({
   recipe,
@@ -73,11 +63,13 @@ const RecipeCard = ({
       <button onClick={() => onReviewsClick(recipe)}>Reviews</button>
       <button onClick={() => onRecipeClick(recipe)}>Recipe</button>
       <button onClick={() => onNutritionClick(recipe)}>Nutrition Info</button>
-      {/* TODO */}
       <div className="relative">
-        <button onClick={toggleAddToMealPlanDropdown}>Add to Meal Plan</button>
+        <button onClick={toggleAddToMealPlanDropdown} className="flex">
+          Add to Meal Plan
+          <ChevronDownIcon className="ml-1 h-5 w-4" />
+        </button>
         {isAddToMealPlanDropdownVisible && (
-          <div className="absolute mt-2 bg-gray-300 text-center text-lg w-full">
+          <div className="absolute mt-2 bg-gray-300 text-center text-lg w-full opacity-100 z-10">
             {mealplans.map((plan) => (
               <div
                 key={plan.mealPlanID}
