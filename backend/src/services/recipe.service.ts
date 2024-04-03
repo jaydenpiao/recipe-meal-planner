@@ -73,7 +73,7 @@ const recipeService = {
   getAvgRating: async (): Promise<Recipe[]> => {
     try {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
-        'SELECT r.recipeID, r.name, avg_rating.average_rating ' +
+        'SELECT r.recipeID, r.name, r.instructions, avg_rating.average_rating ' +
         'FROM recipe r ' +
         'INNER JOIN (SELECT recipeID, AVG(score) AS average_rating ' +
         '            FROM rating ' +
@@ -84,7 +84,8 @@ const recipeService = {
       return rows.map(row => ({
         recipeID: row.recipeID,
         name: row.name,
-        avgrating: row.average_rating
+        avgrating: row.average_rating,
+        instructions: row.instructions
       }));
     } catch (error) {
       throw new Error(`Error fetching recipes: ${error}`);
