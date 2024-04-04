@@ -5,9 +5,10 @@ import { ChevronDownIcon, StarIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 
-export function ButtonWithIcon({ onClick, buttonText }) {
+export function ButtonWithIcon({ onClick, buttonText, isVerified }) {
   return (
     <Button onClick={onClick} variant="ghost" className="text-2xl font-normal">
+      {isVerified && <StarIcon className="inline mr-1" />}
       {buttonText}
       <ChevronDownIcon className="ml-1 h-4 w-4" />
     </Button>
@@ -19,6 +20,7 @@ const NavBar = () => {
   const [selectedUser, setSelectedUser] = useState();
   const { setSelectedUserID } = useUser();
   const [verifiedUsers, setVerifiedUsers] = useState([]);
+  const [isVerified, setIsVerified] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = () => setIsDropdownVisible(!isDropdownVisible);
@@ -26,6 +28,7 @@ const NavBar = () => {
   const handleSelectUser = (user) => {
     setSelectedUser(user.username);
     setSelectedUserID(user.userID);
+    setIsVerified(verifiedUsers.includes(user.userID));
     setIsDropdownVisible(false);
     console.log("Selected username: ", user.username);
     console.log("Selected userID: ", user.userID);
@@ -57,6 +60,7 @@ const NavBar = () => {
         <ButtonWithIcon
           onClick={toggleDropdown}
           buttonText={selectedUser || "Choose User"}
+          isVerified={isVerified}
         />
         {isDropdownVisible && (
           <div className="absolute z-30 mt-2 rounded-lg bg-gray-300 w-full text-center text-lg opacity-100">
