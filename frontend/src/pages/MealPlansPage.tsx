@@ -62,11 +62,11 @@ const MealPlansPage = () => {
           isOpen={isRecipesOverlayOpen}
           onClose={() => setRecipesOverlayOpen(false)}
         />
-        {/* <ShoppingListOverlay
+        <ShoppingListOverlay
           mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isShoppingListOverlayOpen}
           onClose={() => setShoppingListOverlayOpen(false)}
-        /> */}
+        />
       </div>
     </div>
   );
