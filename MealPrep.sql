@@ -220,7 +220,10 @@ INSERT INTO Ingredient (name, isVegetarian) VALUES
 ('Cheese', TRUE),
 ('Quinoa', TRUE),
 ('Lettuce', TRUE),
-('Pepper', TRUE);
+('Pepper', TRUE),
+('Dough', TRUE),
+('Olive Oil', TRUE),
+('Pepperoni', FALSE);
 
 INSERT INTO Recipe (recipeID, name, instructions) VALUES
 (1, 'Pizza', 
@@ -794,7 +797,7 @@ INSERT INTO nutritionInfoRecipe (recipeID, calories, sugar, proteinContent, fatC
 (7, 350, 10, 12, 15, 40),
 (8, 400, 20, 10, 20, 45),
 (9, 450, 25, 15, 25, 50),
-(10, 150, 5, 8, 2, 25),
+(10, 150, 0, 8, 2, 25),
 (11, 280, 5, 10, 10, 30),
 (12, 220, 4, 9, 8, 35),
 (13, 300, 0, 11, 12, 40),
@@ -816,10 +819,13 @@ INSERT INTO nutritionInfoIngredient (ingredientName, calories, sugar, proteinCon
 ('Cheese', 100, 1, 7, 8, 2),
 ('Quinoa', 100, 0, 2, 0, 50),
 ('Pepper', 1, 2, 1, 0, 9),
-('Lettuce', 1, 0, 0 ,0, 10);
+('Lettuce', 1, 0, 0 ,0, 10),
+('Dough',100, 2, 2, 2, 100),
+('Olive Oil', 100, 2, 0, 50, 0),
+('Pepperoni', 200,5,10, 50, 2);
 
 INSERT INTO recipeContains (recipeID, ingredientName) VALUES
-(1, 'Salt'), (1, 'Chicken'), (2, 'Noodles'), (2, 'Beef'), (3, 'Beef');
+(1, 'Salt'), (1, 'Cheese'), (1, 'Tomato'),(1, 'Dough'), (1, 'Olive Oil'),(1, 'Pepperoni'),(2, 'Noodles'), (2, 'Beef'), (3, 'Beef') ;
 
 INSERT INTO mealPlanContains (mealPlanID, recipeID) VALUES
 (1, 1), (1, 2), (2, 3), (3, 6), (4, 10), (5, 11), (6, 6), (6, 10), (7,8), (8, 13), (8,14), (8,15), (12,20);
@@ -842,7 +848,7 @@ INSERT INTO ShoppingList (shoppingListID, mealPlanID) VALUES
 
 
 INSERT INTO listContains (shoppingListID, ingredientName) VALUES
-(1, 'Salt'),(1, 'Tomato'), (2, 'Chicken'), (2, 'Beef'), (3, 'Rice'), (4, 'Noodles'), (6, 'Lettuce'), (6, 'Quinoa'), (7, 'Tomato'),(9, 'Tomato'), (10, 'Tomato'), (11, 'Noodles'), (12, 'Beef');
+(1, 'Salt'),(1, 'Tomato'), (1, 'Dough'), (1, 'Olive Oil'),(1, 'Pepperoni'),(1, 'Noodles'),(2, 'Chicken'), (2, 'Beef'), (3, 'Rice'), (4, 'Noodles'), (6, 'Lettuce'), (6, 'Quinoa'), (7, 'Tomato'),(9, 'Tomato'), (10, 'Tomato'), (11, 'Noodles'), (12, 'Beef');
 
 INSERT INTO Rating (ratingID, score, userID, recipeID) VALUES
 (1, 1, 1, 1),

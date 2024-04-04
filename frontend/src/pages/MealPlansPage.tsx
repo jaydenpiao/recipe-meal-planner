@@ -4,6 +4,7 @@ import MealPlanCard from "@/components/MealPlanCard";
 import { useUser } from "@/context/UserContext";
 import axios from "axios";
 import MealPlanRecipesOverlay from "@/components/MealPlanRecipesOverlay";
+import AddMealPlanButton from "@/components/AddMealPlanButton";
 
 const MealPlansPage = () => {
   const { selectedUserID } = useUser();
@@ -44,10 +45,15 @@ const MealPlansPage = () => {
     getMealPlans();
   };
 
+  const handleAddMealPlanSuccess = () => {
+    getMealPlans();
+  };
+
   return (
     <div className="flex flex-col items-center overflow-auto mt-24">
       <h1 className="text-lg font-bold">Meal Plans Page</h1>
       <div className="w-full">
+        <AddMealPlanButton onAddSuccess={handleAddMealPlanSuccess} />
         {mealplans.map((mealplan) => (
           <MealPlanCard
             key={mealplan.mealPlanID}
@@ -62,11 +68,11 @@ const MealPlansPage = () => {
           isOpen={isRecipesOverlayOpen}
           onClose={() => setRecipesOverlayOpen(false)}
         />
-        {/* <ShoppingListOverlay
+        <ShoppingListOverlay
           mealPlanID={currentMealPlan?.mealPlanID}
           isOpen={isShoppingListOverlayOpen}
           onClose={() => setShoppingListOverlayOpen(false)}
-        /> */}
+        />
       </div>
     </div>
   );

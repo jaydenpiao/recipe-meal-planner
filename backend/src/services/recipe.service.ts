@@ -116,8 +116,8 @@ const recipeService = {
     try {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
         'SELECT * ' +
-        'FROM Review ' +
-        'WHERE recipeID = ? ', [recipeID]
+        'FROM Review, Recipe ' +
+        'WHERE review.recipeid = recipe.recipeid and review.recipeID = ? ', [recipeID]
       );
       if (!rows) return [];
       return rows.map(row => ({
@@ -133,7 +133,7 @@ const recipeService = {
   getRecipeNutrition: async (recipeID: number): Promise<Recipe[]> => {
     try {
       const [rows]: [RowDataPacket[], FieldPacket[]] = await connection.promise().query(
-        'SELECT * ' +
+        'SELECT recipeid, calories, proteinContent, sugar, fatContent, carbContent ' +
         'FROM nutritionInfoRecipe ' +
         'WHERE recipeID = ? ', [recipeID]
       );
@@ -144,7 +144,7 @@ const recipeService = {
         sugar: row.sugar,
         protein: row.proteinContent,
         fat: row.fatContent,
-        carbs: row.fatContent
+        carbs: row.carbContent
       }));
     } catch (error) {
       throw new Error(`Error fetching nutrition: ${error}`);
