@@ -9,6 +9,14 @@ const controller = {
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
+  },
+  verifiedReviewers: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const user = await userService.verifiedReviewers();
+      res.json(user);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   }
 }
 export default controller;
