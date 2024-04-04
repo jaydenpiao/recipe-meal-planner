@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, StarIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 
@@ -18,7 +18,7 @@ const NavBar = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState();
   const { setSelectedUserID } = useUser();
-  // const [selectedUserID, setSelectedUserID] = useState();
+  const [verifiedUsers, setVerifiedUsers] = useState([]);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = () => setIsDropdownVisible(!isDropdownVisible);
@@ -27,15 +27,18 @@ const NavBar = () => {
     setSelectedUser(user.username);
     setSelectedUserID(user.userID);
     setIsDropdownVisible(false);
-    // console.log(user);
     console.log("Selected username: ", user.username);
     console.log("Selected userID: ", user.userID);
   };
 
   const getUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/users");
-      setUsers(response.data);
+      const [usersResponse, verifiedResponse] = await Promise.all([
+        axios.get("http://localhost:3000/api/users"),
+        axios.get("http://localhost:3000/api/users/verifiedreviewers"),
+      ]);
+      setUsers(usersResponse.data);
+      setVerifiedUsers(verifiedResponse.data.map((vUser) => vUser.userID));
     } catch (error) {
       console.error("Error in NavBar: ", error.message);
     }
@@ -63,6 +66,9 @@ const NavBar = () => {
                   onClick={() => handleSelectUser(user)}
                   className="hover:bg-gray-400 block cursor-pointer"
                 >
+                  {verifiedUsers.includes(user.userID) && (
+                    <StarIcon className="inline mr-1 mb-1" />
+                  )}
                   {user.username}
                 </a>
               </div>
