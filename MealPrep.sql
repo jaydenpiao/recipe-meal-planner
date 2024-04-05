@@ -788,8 +788,8 @@ INSERT INTO SugarFreeRecipe (recipeID) VALUES
 (13), (14), (15), (16), (17), (10);
 
 INSERT INTO nutritionInfoRecipe (recipeID, calories, sugar, proteinContent, fatContent, carbContent) VALUES
-(1, 100, 10, 10, 10, 10),
-(2, 200, 20, 20, 20, 20),
+(1, 500, 10, 10, 10, 10),
+(2, 500, 20, 20, 20, 20),
 (3, 300, 30, 30, 30, 30),
 (4, 400, 40, 40, 40, 40),
 (5, 500, 50, 50, 50, 50),
